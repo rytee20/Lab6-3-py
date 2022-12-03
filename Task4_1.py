@@ -55,4 +55,5 @@ def create_files():
 
 
 if __name__ == '__main__':
+    find_file()
     create_files()
