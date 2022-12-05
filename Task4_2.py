@@ -1,8 +1,9 @@
 import os
 import threading
+from time import perf_counter
 
 
-def find_file():
+def what_file():
     while True:
         try:
             file_to_find = str(input("Ведите название файла который хотите найти: "))
@@ -31,6 +32,11 @@ def find_file():
         except ValueError:
             print("Вы ввели неверно")
 
+    return file_to_find
+
+
+def find_file(file_to_find):
+
     count = 0
     for _, _, files in os.walk(os.getcwd()):
         for filename in files:
@@ -56,11 +62,19 @@ def create_files():
 
 
 if __name__ == '__main__':
-    t1 = threading.Thread(target=find_file, args=())
+    filename=what_file()
+
+    t1 = threading.Thread(target=find_file, args=(filename,))
     t2 = threading.Thread(target=create_files, args=())
 
+    tic = perf_counter()
     t1.start()
     t2.start()
 
     t1.join()
     t2.join()
+    tac = perf_counter()
+
+    print(f"Вычисление заняло {tac - tic:0.4f} секунд")
+    
+    #Вычисление заняло 1.4126 секунд
