@@ -1,7 +1,8 @@
 import os
+from time import perf_counter
 
 
-def find_file():
+def what_file():
     while True:
         try:
             file_to_find = str(input("Ведите название файла который хотите найти: "))
@@ -30,6 +31,11 @@ def find_file():
         except ValueError:
             print("Вы ввели неверно")
 
+        return file_to_find
+
+
+def find_file(file_to_find):
+
     count = 0
     for _, _, files in os.walk(os.getcwd()):
         for filename in files:
@@ -55,5 +61,13 @@ def create_files():
 
 
 if __name__ == '__main__':
-    find_file()
+    filename=what_file()
+
+    tic = perf_counter()
+    find_file(filename)
     create_files()
+    tac = perf_counter()
+
+    print(f"Вычисление заняло {tac - tic:0.4f} секунд")
+    
+    #Вычисление заняло 1.9270 секунд
